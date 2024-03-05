@@ -45,7 +45,10 @@ module.exports = {
             '0 35px 35px rgba(51, 51, 51, 0.25)',
             '0 45px 65px rgba(51, 51, 51, 0.50)'
         ]
-      }
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
   },
   plugins: [],
 };
