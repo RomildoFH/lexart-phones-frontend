@@ -28,7 +28,7 @@ function AppProvider({ children }) {
       };
       const response = await api.post('/users/login', payload);
       if (response?.data) {
-        localStorage.setItem('@TOKEN', response.data);
+        localStorage.setItem('@TOKEN', response.data.token);
         navigate("/");
         setIsLoading(false);
       };
@@ -53,7 +53,35 @@ function AppProvider({ children }) {
   const logout = () => {
     localStorage.removeItem('@TOKEN');
     navigate("/login");
-  }
+  };
+
+  const getProducts = async () => {
+    try {      
+      setIsLoading(true);
+
+      const response = await api.get('/products');
+
+      if (response?.data?.length) {
+        setProductList(response.data);
+      };
+
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
 
   const values = useMemo(() => ({
     isLoading,
@@ -78,6 +106,7 @@ function AppProvider({ children }) {
     setListSize,
     login,
     logout,
+    getProducts,
   }), [
     isLoading,
     email,
