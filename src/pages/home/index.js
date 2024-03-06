@@ -12,6 +12,8 @@ import RightArrow from '../../images/svg/arrow-right.svg';
 import DownArrow from '../../images/svg/arrow-down.svg';
 import EditIcon from '../../images/svg/edit-svgrepo-com.svg';
 import DeleteIcon from '../../images/svg/delete-recycle-bin-trash-can-svgrepo-com.svg';
+import ModalContainer from './components/ModalContainer';
+import FilterMenu from './components/FilterMenu';
 
 const Home = () => {
   const {
@@ -19,8 +21,8 @@ const Home = () => {
     productList,
     setProductList,
     searchTerm,
-    filtredList,
-    setFiltredList,
+    filteredList,
+    setFilteredList,
     selectedProduct,
     isLogged,
     listIndex,
@@ -32,6 +34,13 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [pageIndex, setPageIndex] = useState(1);
   const [pages, setPages] = useState(1);
+  const [filterMenu, setFilterMenu] = useState(false);
+  const [selectedManufacturer, setSelectedManufacturer] = useState('');
+  const [selectedMinPrice, setSelectedMinPrice] = useState('');
+  const [selectedMaxPrice, setSelectedMaxPrice] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedModel, setSelectedModel] = useState('');
+  const [models, setModels] = useState([]);
 
   const navigate = useNavigate();
 
@@ -55,18 +64,18 @@ const Home = () => {
   useEffect(() => {
     if (productList?.length) {
       setLoading(false);
-      setFiltredList(productList)
+      setFilteredList(productList)
     };
 
   }, [productList]);
 
   useEffect(() => {
-    if (filtredList?.length) {
-      setPages(Math.ceil(filtredList.length / (listSize || 1)));
+    if (filteredList?.length) {
+      setPages(Math.ceil(filteredList.length / (listSize || 1)));
     } else {
       setPages(1);
     }
-  }, [filtredList])
+  }, [filteredList])
 
   return (
     loading ? <Loading /> : (
@@ -86,7 +95,9 @@ const Home = () => {
                 onClick={() => navigate('/login')}
                 className={`text-white bg-text-brown px-10 rounded-3xl hover:brightness-125 transition duration-300`}
               />
-              <img src={Filter} alt={`filter-icon.svg`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
+              <button type="button" onClick={() => setFilterMenu(true)}>
+                <img src={Filter} alt={`filter-icon.svg`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
+              </button>
             </section>
             <section className={`w-full border-2 border-gray-50 rounded-lg py-8 px-2`}>
                 <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full font-medium mb-4 bg-white h-fit border-y border-gray-50 py-4 px-6">
@@ -118,7 +129,7 @@ const Home = () => {
               <div className={`overflow-y-scroll pr-2 max-h-72`}>
                 <ul className={`flex-col w-full h-full bg-coral border-b border-gray-50 mb-2`}>
                   {
-                    productList?.filter((e, index) => listSize ? index < listSize : filtredList.length).map((product, index) => (
+                    filteredList?.filter((e, index) => listSize ? index < listSize : filteredList.length).map((product, index) => (
                       <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full bg-white h-fit border-t border-gray-50 py-4 px-6">
                         <p className="overflow-hidden text-left">{index + 1}</p>
                         <p className="overflow-hidden text-left">{product.name}</p>
@@ -153,6 +164,30 @@ const Home = () => {
                 <img src={RightArrow} alt={`foward-page`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
               </div>
             </section>
+
+            <ModalContainer
+            isActive={filterMenu}
+            closeModal={() => setFilterMenu(false)}
+          >
+            <FilterMenu
+              isActive={filterMenu}
+              closeModal={() => setFilterMenu(false)}
+              itemsArray={productList}
+              selectedManufacturer={selectedManufacturer}
+              setSelectedManufacturer={setSelectedManufacturer}
+              selectedMinPrice={selectedMinPrice}
+              setSelectedMinPrice={setSelectedMinPrice}
+              selectedMaxPrice={selectedMaxPrice}
+              setSelectedMaxPrice={setSelectedMaxPrice}
+              setFilteredList={setFilteredList}
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+              selectedModel={selectedModel}
+              setSelectedModel={setSelectedModel}
+              models={models}
+              setModels={setModels}
+            />
+          </ModalContainer>
           </main>
         }
       />

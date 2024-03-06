@@ -11,7 +11,7 @@ function AppProvider({ children }) {
   const [password, setPassword] = useState('');
   const [productList, setProductList] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
-  const [filtredList, setFiltredList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const [listIndex, setListIndex] = useState(1);
@@ -94,8 +94,8 @@ function AppProvider({ children }) {
     setProductList,
     searchTerm,
     setSearchTerm,
-    filtredList,
-    setFiltredList,
+    filteredList,
+    setFilteredList,
     selectedProduct,
     setSelectedProduct,
     isLogged,
@@ -113,7 +113,7 @@ function AppProvider({ children }) {
     password,
     productList,
     searchTerm,
-    filtredList,
+    filteredList,
     selectedProduct,
     isLogged,
     listIndex,
