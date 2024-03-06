@@ -29,6 +29,7 @@ const Home = () => {
     listSize,
     setListSize,
     getProducts,
+    deleteProduct,
   } = useContext(AppContext);
 
   const [loading, setLoading] = useState(true);
@@ -92,7 +93,7 @@ const Home = () => {
               <PrimaryButton
                 title={`Adicionar produto`}
                 name={`add-product`}
-                onClick={() => navigate('/login')}
+                onClick={() => navigate('/produto/new')}
                 className={`text-white bg-text-brown px-10 rounded-3xl hover:brightness-125 transition duration-300`}
               />
               <button type="button" onClick={() => setFilterMenu(true)}>
@@ -145,14 +146,26 @@ const Home = () => {
                             )
                           }
                         </p>
-                        <img
-                          src={EditIcon} alt={`editar`} 
-                          className={`hover:brightness-200 transition duration-300 cursor-pointer`}
-                        />
-                        <img
-                          src={DeleteIcon} alt={`deletar`}
-                          className={`hover:brightness-200 transition duration-300 cursor-pointer`}
-                        />
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/produto/edit/${product.id}`)}
+                        >
+                          <img
+                            src={EditIcon}
+                            alt={`editar`}
+                            className={`hover:brightness-200 transition duration-300 cursor-pointer`}
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deleteProduct(product.id)}
+                        >
+                          <img
+                            src={DeleteIcon}
+                            alt={`deletar`}
+                            className={`hover:brightness-200 transition duration-300 cursor-pointer`}
+                          />
+                        </button>
                       </li>
                     ))
                   }

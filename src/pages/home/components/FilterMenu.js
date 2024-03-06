@@ -32,31 +32,6 @@ const FilterMenu = ({
     setModels(Array.from(modelsSet));
   };
 
-  const applyFilters = () => {
-    let filteredData = [...itemsArray];
-    if (manufacturer) {
-      filteredData = filteredData.filter(item => item.brand.toLowerCase() === manufacturer.toLowerCase());
-      setSelectedManufacturer(manufacturer);
-    }
-    if (minPrice) {
-      filteredData = filteredData.filter(item => item.price >= minPrice);
-      setSelectedMinPrice(minPrice);
-    }
-    if (maxPrice) {
-      filteredData = filteredData.filter(item => item.price <= maxPrice);
-      setSelectedMaxPrice(maxPrice);
-    }
-    if (color) {
-      filteredData = filteredData.filter(item => item.color === color);
-      setSelectedColor(color);
-    }
-    if (model) {
-      filteredData = filteredData.filter(item => item.model === model);
-      setSelectedModel(model);
-    }
-    setFilteredList(filteredData);
-  };
-
   const clearFilters = () => {
     setManufacturer('');
     setSelectedManufacturer('');
@@ -69,6 +44,31 @@ const FilterMenu = ({
     setModel('');
     setModels([]);
     setFilteredList(itemsArray);
+  };
+
+  const applyFilters = () => {
+    let filteredData = [...itemsArray];
+    if (manufacturer) {
+      filteredData = filteredData.filter(item => item.brand.toLowerCase() === manufacturer.toLowerCase());
+      setSelectedManufacturer(manufacturer);
+    }
+    if (minPrice) {
+      filteredData = filteredData.filter(item => Number(item.price) >= Number(minPrice));
+      setSelectedMinPrice(Number(minPrice));
+    }
+    if (maxPrice) {
+      filteredData = filteredData.filter(item => Number(item.price) <= Number(maxPrice));
+      setSelectedMaxPrice(Number(maxPrice));
+    }
+    if (color) {
+      filteredData = filteredData.filter(item => item.color === color);
+      setSelectedColor(color);
+    }
+    if (model) {
+      filteredData = filteredData.filter(item => item.model === model);
+      setSelectedModel(model);
+    }
+    setFilteredList(filteredData);
   };
 
   return (

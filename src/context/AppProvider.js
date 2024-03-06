@@ -32,7 +32,7 @@ function AppProvider({ children }) {
         navigate("/");
         setIsLoading(false);
       };
-      toast.success("Bem vindo(a)!", { autoClose: 2000 })
+      toast.success("Bem vindo(a)!", { autoClose: 2000 });
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message, {
           position: "top-right",
@@ -83,6 +83,29 @@ function AppProvider({ children }) {
     }
   };
 
+  const deleteProduct = async (id) => {
+    try {
+      const response = await api.delete(`/products/${id}`);
+      if (response.status === 200) {
+        toast.success("Produto deletado com sucesso)!", { autoClose: 2000 })
+      };
+      getProducts();
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error);
+    };
+  };
+
   const values = useMemo(() => ({
     isLoading,
     setIsLoading,
@@ -107,6 +130,7 @@ function AppProvider({ children }) {
     login,
     logout,
     getProducts,
+    deleteProduct,
   }), [
     isLoading,
     email,
