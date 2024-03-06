@@ -45,8 +45,48 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const orderProducts = (param) => {
-    console.log(`ordenar por ${param}`);
+  const orderProducts = (sortBy) => {
+    let sortedList = [...productList];
+    const filters = {
+      brand: selectedManufacturer,
+      minPrice: selectedMinPrice,
+      maxPrice: selectedMaxPrice,
+      color: selectedColor,
+      model: selectedModel,
+    }
+    if (sortBy !== 'item') {
+      sortedList.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) return -1;
+        if (a[sortBy] > b[sortBy]) return 1;
+        return 0;
+      });
+    };
+
+    for (const filterKey in filters) {
+      const filterValue = filters[filterKey];
+      if (filterValue) {
+        sortedList = sortedList.filter(item => {
+          if (filterKey === 'brand') {
+            return item.brand.toLowerCase() === filterValue.toLowerCase();
+          }
+          if (filterKey === 'minPrice') {
+            return item.price >= filterValue;
+          }
+          if (filterKey === 'maxPrice') {
+            return item.price <= filterValue;
+          }
+          if (filterKey === 'color') {
+            return item.color === filterValue;
+          }
+          if (filterKey === 'model') {
+            return item.model === filterValue;
+          }
+          return true;
+        });
+      };
+    };
+
+    setFilteredList(sortedList);
   };
 
   useEffect(() => {
@@ -131,14 +171,16 @@ const Home = () => {
                 <ul className={`flex-col w-full h-full bg-coral border-b border-gray-50 mb-2`}>
                   {
                     filteredList?.filter((e, index) => listSize ? index < listSize : filteredList.length).map((product, index) => (
-                      <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full bg-white h-fit border-t border-gray-50 py-4 px-6">
+                      <li
+                        className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full bg-white h-fit border-t border-gray-50 py-4 px-6"
+                      >
                         <p className="overflow-hidden text-left">{index + 1}</p>
                         <p className="overflow-hidden text-left">{product.name}</p>
                         <p className="overflow-hidden text-left">{product.brand}</p>
                         <p className="overflow-hidden text-left">{product.model}</p>
                         <p className="overflow-hidden text-left">{product.color}</p>
                         <p
-                        className="overflow-hidden text-left"
+                          className="overflow-hidden text-left"
                         >
                           {
                             Number(product.price).toLocaleString(

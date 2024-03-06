@@ -17,23 +17,23 @@ const FilterMenu = ({
   models,
   setModels,
 }) => {
-  const [manufacturer, setManufacturer] = useState(selectedManufacturer || '');
+
   const [minPrice, setMinPrice] = useState(selectedMinPrice || '');
   const [maxPrice, setMaxPrice] = useState(selectedMaxPrice || '');
   const [color, setColor] = useState(selectedColor || '');
   const [model, setModel] = useState(selectedModel || '');
 
   const uniqueColors = Array.from(new Set(itemsArray.map(item => item.color)));
+  const uniqueManufacturers = Array.from(new Set(itemsArray.map(item => item.brand)));
 
   const generateModels = () => {
     const modelsSet = new Set(itemsArray
-      .filter(item => item.brand.toLowerCase() === manufacturer.toLowerCase())
+      .filter(item => item.brand.toLowerCase() === selectedManufacturer.toLowerCase())
       .map(item => item.model));
     setModels(Array.from(modelsSet));
   };
 
   const clearFilters = () => {
-    setManufacturer('');
     setSelectedManufacturer('');
     setMinPrice('');
     setSelectedMinPrice('');
@@ -42,15 +42,16 @@ const FilterMenu = ({
     setColor('');
     setSelectedColor('');
     setModel('');
+    setSelectedModel('');
     setModels([]);
     setFilteredList(itemsArray);
   };
 
   const applyFilters = () => {
     let filteredData = [...itemsArray];
-    if (manufacturer) {
-      filteredData = filteredData.filter(item => item.brand.toLowerCase() === manufacturer.toLowerCase());
-      setSelectedManufacturer(manufacturer);
+    if (selectedManufacturer) {
+      filteredData = filteredData.filter(item => item.brand.toLowerCase() === selectedManufacturer.toLowerCase());
+      setSelectedManufacturer(selectedManufacturer);
     }
     if (minPrice) {
       filteredData = filteredData.filter(item => Number(item.price) >= Number(minPrice));
@@ -77,15 +78,19 @@ const FilterMenu = ({
       <article className="flex flex-col space-y-4">
         <div className="flex flex-col">
           <label htmlFor="manufacturer">Fabricante:</label>
-          <input
-            type="text"
+          <select
             id="manufacturer"
-            value={manufacturer}
-            onChange={(e) => setManufacturer(e.target.value)}
+            value={selectedManufacturer}
+            onChange={(e) => setSelectedManufacturer(e.target.value)}
             onBlur={generateModels}
-            className="border border-gray-300 rounded-md px-2 py-1"
+            className="border border-gray-300 rounded-md px-2 py-1 h-9"
             aria-label="Fabricante"
-          />
+          >
+            <option value="">Selecione</option>
+            {uniqueManufacturers.map(manufacturer => (
+              <option key={manufacturer} value={manufacturer}>{manufacturer}</option>
+            ))}
+          </select>
         </div>
         {models.length > 0 && (
           <div className="flex flex-col">
@@ -94,7 +99,7 @@ const FilterMenu = ({
               id="model"
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              className="border border-gray-300 rounded-md px-2 py-1"
+              className="border border-gray-300 rounded-md px-2 py-1 h-9"
               aria-label="Modelo"
             >
               <option value="">Selecione</option>
@@ -132,7 +137,7 @@ const FilterMenu = ({
             id="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
-            className="border border-gray-300 rounded-md px-2 py-1"
+            className="border border-gray-300 rounded-md px-2 py-1 h-9"
             aria-label="Cor"
           >
             <option value="">Selecione</option>
