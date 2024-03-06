@@ -17,6 +17,7 @@ const Home = () => {
   const {
     email,
     productList,
+    setProductList,
     searchTerm,
     filtredList,
     setFiltredList,
@@ -46,6 +47,9 @@ const Home = () => {
 
     getProducts();
     setListSize(10);
+    return () => {
+      setProductList([])
+    }
   }, [])
 
   useEffect(() => {
@@ -79,12 +83,12 @@ const Home = () => {
               <PrimaryButton
                 title={`Adicionar produto`}
                 name={`add-product`}
-                onClick={() => console.log('click')}
+                onClick={() => navigate('/login')}
                 className={`text-white bg-text-brown px-10 rounded-3xl hover:brightness-125 transition duration-300`}
               />
               <img src={Filter} alt={`filter-icon.svg`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
             </section>
-            <section className={`w-full border-2 border-gray-50 rounded-lg py-8 pr-2`}>
+            <section className={`w-full border-2 border-gray-50 rounded-lg py-8 px-2`}>
                 <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full font-medium mb-4 bg-white h-fit border-y border-gray-50 py-4 px-6">
                   <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
                     <p className="overflow-hidden text-left">Item</p>

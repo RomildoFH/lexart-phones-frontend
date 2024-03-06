@@ -20,6 +20,7 @@ module.exports = {
       },
       gray: {
         50: '#D7D7D7',
+        70: '#787486',
       },
       coral: '#FFFBF5',
       shadow: {
