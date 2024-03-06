@@ -96,7 +96,7 @@ const Home = () => {
     };
 
     getProducts();
-    setListSize(10);
+    setListSize(5);
     return () => {
       setProductList([])
     }
@@ -112,7 +112,7 @@ const Home = () => {
 
   useEffect(() => {
     if (filteredList?.length) {
-      setPages(Math.ceil(filteredList.length / (listSize || 1)));
+      setPages((Math.ceil(filteredList.length / listSize)) || 1);
     } else {
       setPages(1);
     }
@@ -170,11 +170,12 @@ const Home = () => {
               <div className={`overflow-y-scroll pr-2 max-h-72`}>
                 <ul className={`flex-col w-full h-full bg-coral border-b border-gray-50 mb-2`}>
                   {
-                    filteredList?.filter((e, index) => listSize ? index < listSize : filteredList.length).map((product, index) => (
+                    filteredList?.slice((pageIndex - 1) * listSize, pageIndex * listSize)
+                    .map((product, index) => (
                       <li
                         className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full bg-white h-fit border-t border-gray-50 py-4 px-6"
                       >
-                        <p className="overflow-hidden text-left">{index + 1}</p>
+                        <p className="overflow-hidden text-left">{(pageIndex - 1) * (listSize || 0) + index + 1}</p>
                         <p className="overflow-hidden text-left">{product.name}</p>
                         <p className="overflow-hidden text-left">{product.brand}</p>
                         <p className="overflow-hidden text-left">{product.model}</p>
@@ -213,10 +214,30 @@ const Home = () => {
                   }
                 </ul>
               </div>
-              <div className={`flex pl-4 pt-4 gap-4 align-middle h-10`}>
-                <img src={LeftArrow} alt={`back-page`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
-                <p>{`Página ${1} de ${pages}`}</p>
-                <img src={RightArrow} alt={`foward-page`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
+              <div className={`flex pl-4 gap-4 align-middle h-8`}>
+                <button
+                  onClick={() => setPageIndex(pageIndex - 1)}
+                  disabled={pageIndex <= 1}
+                  className={`h-full`}
+                >
+                  <img
+                    src={LeftArrow}
+                    alt={`back-page`}
+                    className={`hover:brightness-125 transition duration-300 cursor-pointer`}
+                  />
+                </button>
+                <p className={`text-base pt-1`}>{`Página ${pageIndex} de ${pages}`}</p>
+                <button
+                  onClick={() => setPageIndex(pageIndex + 1)}
+                  disabled={pageIndex >= pages}
+                  className={`h-full`}
+                >
+                  <img
+                    src={RightArrow}
+                    alt={`foward-page`}
+                    className={`hover:brightness-125 transition duration-300 cursor-pointer`}
+                  />
+                </button>
               </div>
             </section>
 

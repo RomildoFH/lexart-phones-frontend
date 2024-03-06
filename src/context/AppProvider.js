@@ -15,7 +15,7 @@ function AppProvider({ children }) {
   const [selectedProduct, setSelectedProduct] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const [listIndex, setListIndex] = useState(1);
-  const [listSize, setListSize] = useState(10);
+  const [listSize, setListSize] = useState();
 
   const navigate = useNavigate();
 
