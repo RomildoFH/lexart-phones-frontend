@@ -110,23 +110,24 @@ function AppProvider({ children }) {
 
   const getProduct = async (id) => {
     try {
-      const response = await api.get(`/products/${id}`);
-      if (response.data.id) {
+        const response = await api.get(`/products/${id}`);
         setSelectedProduct(response.data);
-      };
     } catch (error) {
-      toast.error(error?.response?.data?.message || error.message, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }
-      );
-      console.log(error)
+      if (error.response.status === 401) {
+          navigate('/login');
+      } else {
+          toast.error(error?.response?.data?.message || error.message, {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+          });
+      }
+      console.log(error);
     };
   };
 
