@@ -113,23 +113,23 @@ const Product = () => {
             <form onSubmit={handleSubmit} className={`flex flex-col w-96 gap-2`}>
               <label className="flex flex-col">
                 Nome:
-                <input className="border border-gray-300 rounded-md px-2 h-10" type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Insira o nome do produto" />
+                <input className="border border-gray-300 rounded-xl px-4 h-10" type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Insira o nome do produto" />
               </label>
               <label className="flex flex-col">
                 Fabricante:
-                <input className="border border-gray-300 rounded-md px-2 h-10" type="text" name="brand" value={formData.brand} onChange={handleChange} placeholder="Insira o fabricante do produto" />
+                <input className="border border-gray-300 rounded-xl px-4 h-10" type="text" name="brand" value={formData.brand} onChange={handleChange} placeholder="Insira o fabricante do produto" />
               </label>
               <label className="flex flex-col">
                 Modelo:
-                <input className="border border-gray-300 rounded-md px-2 h-10" type="text" name="model" value={formData.model} onChange={handleChange} placeholder="Insira o modelo do produto" />
+                <input className="border border-gray-300 rounded-xl px-4 h-10" type="text" name="model" value={formData.model} onChange={handleChange} placeholder="Insira o modelo do produto" />
               </label>
               <label className="flex flex-col">
                 Preço:
-                <input className="border border-gray-300 rounded-md px-2 h-10" type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Insira o preço do produto" />
+                <input className="border border-gray-300 rounded-xl px-4 h-10" type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Insira o preço do produto" />
               </label>
               <label className="flex flex-col">
                 Cor:
-                <select className="border border-gray-300 rounded-md px-2 h-10" name="color" value={formData.color} onChange={handleChange}>
+                <select className="border border-gray-300 rounded-xl px-4 h-10" name="color" value={formData.color} onChange={handleChange}>
                   <option value={''}>{'Selecione'}</option>
                   {colors.map((color, index) => (
                     <option key={index} value={color}>{color}</option>

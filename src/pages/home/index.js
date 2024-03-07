@@ -164,7 +164,7 @@ const Home = () => {
       <TwoColumns
         column1={<SideBar />}
         column2={
-          <main className={`flex flex-col justify-between p-10 pb-0 w-full lg:p-2 h-full`}>
+          <main className={`flex flex-col justify-between p-10 pb-1 w-full lg:p-2 h-full`}>
             <header className={`flex w-full`}>
               <h1 className={`font-bold text-5xl w-full text-text-brown md:text-3xl`}>
                 Lista de produtos
