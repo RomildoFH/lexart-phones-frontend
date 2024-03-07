@@ -26,12 +26,10 @@ const AccessManagement = () => {
 
   const filterBySearchTerm = () => {
     if (searchTerm) {
-      console.log('filtrando', searchTerm)
       let filtered = itens.filter((e) => (
         e.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         e.email.toLowerCase().includes(searchTerm.toLowerCase())
-      ));    
-      console.log('filtrando', filtered)
+      ));
       setItens(filtered);
     } else {
       setItens(users);
@@ -45,17 +43,15 @@ const AccessManagement = () => {
     };
 
     getAllUsers();
-    console.log('montou')
     setLoading(false);
-    // return () => {
-    //   setUsers([])
-    // }
+    return () => {
+      setUsers([])
+    }
   }, []);
 
   useEffect(() => {
     setItens(users);
     if (users?.length) {
-      console.log('users no gestao', users);
       setFilteredUsers(users);
       setLoading(false);
     }

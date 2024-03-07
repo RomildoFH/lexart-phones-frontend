@@ -84,7 +84,7 @@ const Home = () => {
     };
 
     getProducts();
-    setListSize(50);
+    setListSize(10);
     return () => {
       setProductList([])
     }

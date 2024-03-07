@@ -7,7 +7,7 @@ const SearchBar = ({onChange, value, placeholder}) => {
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
       value={value}
-      className={`w-2/5 max-w-80 px-4 rounded-3xl h-12 border`}
+      className={`w-2/5 min-w-60 max-w-80 px-4 rounded-3xl h-12 border`}
     />
   );
 };
