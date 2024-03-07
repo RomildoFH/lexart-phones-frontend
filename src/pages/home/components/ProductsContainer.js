@@ -12,34 +12,18 @@ const ProductsContainer = (
     filteredList,
     listSize,
     deleteProduct,
-    selectedManufacturer,
-    selectedMinPrice,
-    selectedMaxPrice,
-    selectedColor,
-    selectedModel,
   }) => {
 
   const [pageIndex, setPageIndex] = useState(1);
   const [pages, setPages] = useState(1);
-  // const [selectedManufacturer, setSelectedManufacturer] = useState('');
-  // const [selectedMinPrice, setSelectedMinPrice] = useState('');
-  // const [selectedMaxPrice, setSelectedMaxPrice] = useState('');
-  // const [selectedColor, setSelectedColor] = useState('');
-  // const [selectedModel, setSelectedModel] = useState('');
 
 
   const navigate = useNavigate();
 
   const orderProducts = (sortBy) => {
-    let sortedList = [...productList];
-    const filters = {
-      brand: selectedManufacturer,
-      minPrice: selectedMinPrice,
-      maxPrice: selectedMaxPrice,
-      color: selectedColor,
-      model: selectedModel,
-    };
-    if (sortBy !== 'item') {
+    let sortedList = filteredList ? [...filteredList] : [...productList];
+    
+    if (sortBy !== 'item' && sortBy !== 'price') {
       sortedList.sort((a, b) => {
         if (a[sortBy] < b[sortBy]) return -1;
         if (a[sortBy] > b[sortBy]) return 1;
@@ -47,28 +31,12 @@ const ProductsContainer = (
       });
     };
 
-    for (const filterKey in filters) {
-      const filterValue = filters[filterKey];
-      if (filterValue) {
-        sortedList = sortedList.filter(item => {
-          if (filterKey === 'brand') {
-            return item.brand.toLowerCase() === filterValue.toLowerCase();
-          }
-          if (filterKey === 'minPrice') {
-            return item.price >= filterValue;
-          }
-          if (filterKey === 'maxPrice') {
-            return item.price <= filterValue;
-          }
-          if (filterKey === 'color') {
-            return item.color === filterValue;
-          }
-          if (filterKey === 'model') {
-            return item.model === filterValue;
-          }
-          return true;
-        });
-      };
+    if (sortBy === 'price') {
+      sortedList.sort((a, b) => {
+        if (Number(a[sortBy]) < Number(b[sortBy])) return -1;
+        if (Number(a[sortBy]) > Number(b[sortBy])) return 1;
+        return 0;
+      });
     };
 
     setFilteredList(sortedList);
