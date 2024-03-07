@@ -106,6 +106,69 @@ function AppProvider({ children }) {
     };
   };
 
+  const getProduct = async (id) => {
+    try {
+      const response = await api.get(`/products/${id}`);
+      if (response.data.id) {
+        setSelectedProduct(response.data);
+      };
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
+  const updateProduct = async (id, payload) => {
+    try {
+      await api.patch(`/products/${id}`, payload);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
+  const createProduct = async ( payload) => {
+    try {
+      const response = await api.post(`/products`, payload);
+      if (response.data) {
+        setSelectedProduct(response.data);
+      };
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
   const values = useMemo(() => ({
     isLoading,
     setIsLoading,
@@ -131,6 +194,9 @@ function AppProvider({ children }) {
     logout,
     getProducts,
     deleteProduct,
+    getProduct,
+    updateProduct,
+    createProduct,
   }), [
     isLoading,
     email,

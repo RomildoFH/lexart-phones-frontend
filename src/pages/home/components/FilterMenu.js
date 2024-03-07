@@ -16,12 +16,15 @@ const FilterMenu = ({
   setSelectedModel,
   models,
   setModels,
+  listSize,
+  setListSize,
 }) => {
 
   const [minPrice, setMinPrice] = useState(selectedMinPrice || '');
   const [maxPrice, setMaxPrice] = useState(selectedMaxPrice || '');
   const [color, setColor] = useState(selectedColor || '');
   const [model, setModel] = useState(selectedModel || '');
+  const [size, setSize] = useState(listSize || '');
 
   const uniqueColors = Array.from(new Set(itemsArray.map(item => item.color)));
   const uniqueManufacturers = Array.from(new Set(itemsArray.map(item => item.brand)));
@@ -69,11 +72,14 @@ const FilterMenu = ({
       filteredData = filteredData.filter(item => item.model === model);
       setSelectedModel(model);
     }
+    if (size) {
+      setListSize(size);
+    }
     setFilteredList(filteredData);
   };
 
   return (
-    <section className="p-6 bg-white rounded-2xl">
+    <section className="flex flex-col p-6 bg-white rounded-2xl sm:max-w-80 sm:text-sm">
       <h2 className="text-2xl font-bold mb-4 text-text-brown">Filtrar Produtos</h2>
       <article className="flex flex-col space-y-4">
         <div className="flex flex-col">
@@ -99,7 +105,7 @@ const FilterMenu = ({
               id="model"
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              className="border border-gray-300 rounded-md px-2 py-1 h-9"
+              className="border border-gray-300 rounded-md px-2 py-1 h-9 max-h-20 overflow-y-auto"
               aria-label="Modelo"
             >
               <option value="">Selecione</option>
@@ -145,6 +151,17 @@ const FilterMenu = ({
               <option key={color} value={color}>{color}</option>
             ))}
           </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="maxPrice">Itens por página:</label>
+          <input
+            type="number"
+            id="listSize"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+            className="border border-gray-300 rounded-md px-2 py-1"
+            aria-label="Tamanho da lista"
+          />
         </div>
         <div className="flex justify-between">
           <PrimaryButton title={'Aplicar Filtros'} onClick={applyFilters} className={`text-white bg-text-brown px-10 w-60 rounded-3xl hover:brightness-125 transition duration-300`} />

@@ -42,6 +42,7 @@ const Home = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedModel, setSelectedModel] = useState('');
   const [models, setModels] = useState([]);
+  const [filteredName, setFilteredName] = useState('');
 
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ const Home = () => {
       maxPrice: selectedMaxPrice,
       color: selectedColor,
       model: selectedModel,
-    }
+    };
     if (sortBy !== 'item') {
       sortedList.sort((a, b) => {
         if (a[sortBy] < b[sortBy]) return -1;
@@ -87,6 +88,46 @@ const Home = () => {
     };
 
     setFilteredList(sortedList);
+  };
+
+  const filterByName = ({target}) => {
+    const {value} = target;
+    setFilteredName(value);
+    let filtered = productList.filter((e) => e.name.toLowerCase().includes(value.toLowerCase()));
+
+    const filters = {
+      brand: selectedManufacturer,
+      minPrice: selectedMinPrice,
+      maxPrice: selectedMaxPrice,
+      color: selectedColor,
+      model: selectedModel,
+    };
+
+    for (const filterKey in filters) {
+      const filterValue = filters[filterKey];
+      if (filterValue) {
+        filtered = filtered.filter(item => {
+          if (filterKey === 'brand') {
+            return item.brand.toLowerCase() === filterValue.toLowerCase();
+          }
+          if (filterKey === 'minPrice') {
+            return item.price >= filterValue;
+          }
+          if (filterKey === 'maxPrice') {
+            return item.price <= filterValue;
+          }
+          if (filterKey === 'color') {
+            return item.color === filterValue;
+          }
+          if (filterKey === 'model') {
+            return item.model === filterValue;
+          }
+          return true;
+        });
+      };
+    };
+
+    setFilteredList(filtered);
   };
 
   useEffect(() => {
@@ -123,57 +164,65 @@ const Home = () => {
       <TwoColumns
         column1={<SideBar />}
         column2={
-          <main className={`flex-col p-10 w-full`}>
+          <main className={`flex-col p-10 w-full lg:p-2`}>
             <header className={`flex w-full mb-10`}>
-              <h1 className={`font-bold text-5xl w-fit text-text-brown`}>
+              <h1 className={`font-bold text-5xl w-full text-text-brown md:text-3xl`}>
                 Lista de produtos
               </h1>
             </header>
-            <section className={`flex w-full gap-10 mb-10`}>
+            <section className={`flex justify-start w-full mb-10 gap-2`}>
               <PrimaryButton
                 title={`Adicionar produto`}
                 name={`add-product`}
                 onClick={() => navigate('/produto/new')}
-                className={`text-white bg-text-brown px-10 rounded-3xl hover:brightness-125 transition duration-300`}
+                className={`w-2/5 max-w-56 text-white bg-text-brown px-10 rounded-3xl hover:brightness-125 transition duration-300 text-base md:text-xs `}
               />
-              <button type="button" onClick={() => setFilterMenu(true)}>
-                <img src={Filter} alt={`filter-icon.svg`} className={`hover:brightness-125 transition duration-300 cursor-pointer`} />
-              </button>
+              <input
+                  type="text"
+                  placeholder='Buscar por nome'
+                  onChange={(e) => filterByName(e)} value={filteredName}
+                  className={`w-2/5 max-w-80 px-4 rounded-3xl h-12 border`}
+                />
+                <button type="button" onClick={() => setFilterMenu(true)} className={`min-w-8`}>
+                  <img src={Filter} alt={`filter-icon.svg`} className={`hover:brightness-125 transition duration-300 cursor-pointer w-full`} />
+                </button>
             </section>
-            <section className={`w-full border-2 border-gray-50 rounded-lg py-8 px-2`}>
-                <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full font-medium mb-4 bg-white h-fit border-y border-gray-50 py-4 px-6">
-                  <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
-                    <p className="overflow-hidden text-left">Item</p>
-                    <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('index')} />
-                  </div>
-                  <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
-                    <p className="overflow-hidden text-left">Nome</p>
-                    <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('name')} />
-                  </div>
-                  <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
-                    <p className="overflow-hidden text-left">Fabricante</p>
-                    <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('brand')} />
-                  </div>
-                  <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
-                    <p className="overflow-hidden text-left">Modelo</p>
-                    <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('model')} />
-                  </div>
-                  <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
-                    <p className="overflow-hidden text-left">Cor</p>
-                    <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('color')} />
-                  </div>
-                  <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
-                    <p className="overflow-hidden text-left">Preço</p>
-                    <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('price')} />
-                  </div>
-                </li>
-              <div className={`overflow-y-scroll pr-2 max-h-72`}>
-                <ul className={`flex-col w-full h-full bg-coral border-b border-gray-50 mb-2`}>
+            <section
+              className={`flex flex-col justify-between w-full h-4/6 border-2 border-gray-50 rounded-lg pt-4 pb-2 px-2 lg:text-sm overflow-x-auto`}
+            >
+              <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1.5fr,0.5fr] gap-1 w-full font-medium mb-4 bg-white h-fit border-y border-gray-50 py-4 px-6 min-w-530">
+                <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
+                  <p className="overflow-hidden text-left">Item</p>
+                  <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('index')} />
+                </div>
+                <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
+                  <p className="overflow-hidden text-left">Nome</p>
+                  <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('name')} />
+                </div>
+                <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
+                  <p className="overflow-hidden text-left">Fabricante</p>
+                  <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('brand')} />
+                </div>
+                <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
+                  <p className="overflow-hidden text-left">Modelo</p>
+                  <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('model')} />
+                </div>
+                <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
+                  <p className="overflow-hidden text-left">Cor</p>
+                  <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('color')} />
+                </div>
+                <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
+                  <p className="overflow-hidden text-left">Preço</p>
+                  <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('price')} />
+                </div>
+              </li>
+              <div className={`pr-1 h-4/6 mb-1 overflow-y-auto min-w-530`}>
+                <ul className={`flex-col w-full h-full bg-coral border-b border-gray-50 mb-2 text-base lg:text-sm`}>
                   {
                     filteredList?.slice((pageIndex - 1) * listSize, pageIndex * listSize)
                     .map((product, index) => (
                       <li
-                        className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1fr,0.2fr,0.2fr] gap-4 w-full bg-white h-fit border-t border-gray-50 py-4 px-6"
+                        className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1.5fr,0.5fr] gap-1 w-full bg-white h-fit border-t border-gray-50 py-4 px-6 lg:gap-1"
                       >
                         <p className="overflow-hidden text-left">{(pageIndex - 1) * (listSize || 0) + index + 1}</p>
                         <p className="overflow-hidden text-left">{product.name}</p>
@@ -189,32 +238,34 @@ const Home = () => {
                             )
                           }
                         </p>
-                        <button
-                          type="button"
-                          onClick={() => navigate(`/produto/edit/${product.id}`)}
-                        >
-                          <img
-                            src={EditIcon}
-                            alt={`editar`}
-                            className={`hover:brightness-200 transition duration-300 cursor-pointer`}
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => deleteProduct(product.id)}
-                        >
-                          <img
-                            src={DeleteIcon}
-                            alt={`deletar`}
-                            className={`hover:brightness-200 transition duration-300 cursor-pointer`}
-                          />
-                        </button>
+                        <div className={`flex min-w-8 max-w-10`}>
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/produto/edit/${product.id}`)}
+                          >
+                            <img
+                              src={EditIcon}
+                              alt={`editar`}
+                              className={`hover:brightness-200 transition duration-300 cursor-pointer`}
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => deleteProduct(product.id)}
+                          >
+                            <img
+                              src={DeleteIcon}
+                              alt={`deletar`}
+                              className={`hover:brightness-200 transition duration-300 cursor-pointer`}
+                            />
+                          </button>
+                        </div>
                       </li>
                     ))
                   }
                 </ul>
               </div>
-              <div className={`flex pl-4 gap-4 align-middle h-8`}>
+              <div className={`flex pl-4 gap-4 align-middle h-8 xl:text-xs xl:h-4`}>
                 <button
                   onClick={() => setPageIndex(pageIndex - 1)}
                   disabled={pageIndex <= 1}
@@ -223,10 +274,10 @@ const Home = () => {
                   <img
                     src={LeftArrow}
                     alt={`back-page`}
-                    className={`hover:brightness-125 transition duration-300 cursor-pointer`}
+                    className={`hover:brightness-125 transition duration-300 cursor-pointer xl:h-4`}
                   />
                 </button>
-                <p className={`text-base pt-1`}>{`Página ${pageIndex} de ${pages}`}</p>
+                <p>{`Página ${pageIndex} de ${pages}`}</p>
                 <button
                   onClick={() => setPageIndex(pageIndex + 1)}
                   disabled={pageIndex >= pages}
@@ -235,7 +286,7 @@ const Home = () => {
                   <img
                     src={RightArrow}
                     alt={`foward-page`}
-                    className={`hover:brightness-125 transition duration-300 cursor-pointer`}
+                    className={`hover:brightness-125 transition duration-300 cursor-pointer xl:h-4`}
                   />
                 </button>
               </div>
@@ -262,6 +313,8 @@ const Home = () => {
               setSelectedModel={setSelectedModel}
               models={models}
               setModels={setModels}
+              listSize={listSize}
+              setListSize={setListSize}
             />
           </ModalContainer>
           </main>
