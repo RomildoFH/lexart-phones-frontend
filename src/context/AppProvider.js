@@ -166,6 +166,29 @@ function AppProvider({ children }) {
     };
   };
 
+  const register = async (data) => {
+    try {
+      const created = await api.post(`/users`, data);
+      console.log(created)
+      setEmail(data.email);
+      setPassword(data.password);
+      await login();
+    } catch (error) {
+      toast.error(error?.response?.data || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
   const values = useMemo(() => ({
     isLoading,
     setIsLoading,
@@ -194,6 +217,7 @@ function AppProvider({ children }) {
     getProduct,
     updateProduct,
     createProduct,
+    register,
   }), [
     isLoading,
     email,

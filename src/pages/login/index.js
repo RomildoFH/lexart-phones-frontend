@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import LoginForm from './components/LoginForm';
 import Logo from '../../images/svg/lex-white.svg';
 import TwoEqualColumns from '../../layouts/TwoColumns/TwoEqualColumns';
+import RegistryForm from './components/RegistryForm';
 
 const Login = () => {
 
@@ -26,7 +27,9 @@ const Login = () => {
             {
               typeForm === 'login' ? (
                 <LoginForm setTypeForm={setTypeForm} />
-              ) : null
+              ) : (
+                <RegistryForm setTypeForm={setTypeForm} />
+              )
             }
           </section>
         </main>
