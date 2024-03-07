@@ -20,12 +20,6 @@ const FilterMenu = ({
   setListSize,
 }) => {
 
-  const [minPrice, setMinPrice] = useState(selectedMinPrice || '');
-  const [maxPrice, setMaxPrice] = useState(selectedMaxPrice || '');
-  const [color, setColor] = useState(selectedColor || '');
-  const [model, setModel] = useState(selectedModel || '');
-  const [size, setSize] = useState(listSize || '');
-
   const uniqueColors = Array.from(new Set(itemsArray.map(item => item.color)));
   const uniqueManufacturers = Array.from(new Set(itemsArray.map(item => item.brand)));
 
@@ -38,13 +32,9 @@ const FilterMenu = ({
 
   const clearFilters = () => {
     setSelectedManufacturer('');
-    setMinPrice('');
     setSelectedMinPrice('');
-    setMaxPrice('');
     setSelectedMaxPrice('');
-    setColor('');
     setSelectedColor('');
-    setModel('');
     setSelectedModel('');
     setModels([]);
     setFilteredList(itemsArray);
@@ -56,24 +46,24 @@ const FilterMenu = ({
       filteredData = filteredData.filter(item => item.brand.toLowerCase() === selectedManufacturer.toLowerCase());
       setSelectedManufacturer(selectedManufacturer);
     }
-    if (minPrice) {
-      filteredData = filteredData.filter(item => Number(item.price) >= Number(minPrice));
-      setSelectedMinPrice(Number(minPrice));
+    if (selectedMinPrice) {
+      filteredData = filteredData.filter(item => Number(item.price) >= Number(selectedMinPrice));
+      setSelectedMinPrice(Number(selectedMinPrice));
     }
-    if (maxPrice) {
-      filteredData = filteredData.filter(item => Number(item.price) <= Number(maxPrice));
-      setSelectedMaxPrice(Number(maxPrice));
+    if (selectedMaxPrice) {
+      filteredData = filteredData.filter(item => Number(item.price) <= Number(selectedMaxPrice));
+      setSelectedMaxPrice(Number(selectedMaxPrice));
     }
-    if (color) {
-      filteredData = filteredData.filter(item => item.color === color);
-      setSelectedColor(color);
+    if (selectedColor) {
+      filteredData = filteredData.filter(item => item.color === selectedColor);
+      setSelectedColor(selectedColor);
     }
-    if (model) {
-      filteredData = filteredData.filter(item => item.model === model);
-      setSelectedModel(model);
+    if (selectedModel) {
+      filteredData = filteredData.filter(item => item.model === selectedModel);
+      setSelectedModel(selectedModel);
     }
-    if (size) {
-      setListSize(size);
+    if (listSize) {
+      setListSize(listSize);
     }
     setFilteredList(filteredData);
   };
@@ -103,8 +93,8 @@ const FilterMenu = ({
             <label htmlFor="model">Modelo:</label>
             <select
               id="model"
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
               className="border border-gray-300 rounded-md px-2 py-1 h-9 max-h-20 overflow-y-auto"
               aria-label="Modelo"
             >
@@ -120,8 +110,8 @@ const FilterMenu = ({
           <input
             type="number"
             id="minPrice"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
+            value={selectedMinPrice}
+            onChange={(e) => setSelectedMinPrice(e.target.value)}
             className="border border-gray-300 rounded-md px-2 py-1"
             aria-label="Preço mínimo"
           />
@@ -131,8 +121,8 @@ const FilterMenu = ({
           <input
             type="number"
             id="maxPrice"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
+            value={selectedMaxPrice}
+            onChange={(e) => setSelectedMaxPrice(e.target.value)}
             className="border border-gray-300 rounded-md px-2 py-1"
             aria-label="Preço máximo"
           />
@@ -141,8 +131,8 @@ const FilterMenu = ({
           <label htmlFor="color">Cor:</label>
           <select
             id="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
+            value={selectedColor}
+            onChange={(e) => setSelectedColor(e.target.value)}
             className="border border-gray-300 rounded-md px-2 py-1 h-9"
             aria-label="Cor"
           >
@@ -156,9 +146,11 @@ const FilterMenu = ({
           <label htmlFor="maxPrice">Itens por página:</label>
           <input
             type="number"
+            min={1}
             id="listSize"
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
+            value={listSize || 1}
+            onChange={(e) => setListSize(e.target.value)}
+            onBlur={() => applyFilters()}
             className="border border-gray-300 rounded-md px-2 py-1"
             aria-label="Tamanho da lista"
           />
