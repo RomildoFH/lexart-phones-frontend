@@ -85,6 +85,13 @@ const Product = () => {
       updateProduct(selectedProduct.id, formData);
     } else {
       createProduct(formData);
+      setFormData({
+        name: '',
+        brand: '',
+        model: '',
+        color: '',
+        price: '',
+      })
     };
   };
 
@@ -118,11 +125,12 @@ const Product = () => {
               </label>
               <label className="flex flex-col">
                 Preço:
-                <input className="border border-gray-300 rounded-md px-2 h-10" type="number" name="model" value={formData.price} onChange={handleChange} placeholder="Insira o preço do produto" />
+                <input className="border border-gray-300 rounded-md px-2 h-10" type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Insira o preço do produto" />
               </label>
               <label className="flex flex-col">
                 Cor:
                 <select className="border border-gray-300 rounded-md px-2 h-10" name="color" value={formData.color} onChange={handleChange}>
+                  <option value={''}>{'Selecione'}</option>
                   {colors.map((color, index) => (
                     <option key={index} value={color}>{color}</option>
                   ))}

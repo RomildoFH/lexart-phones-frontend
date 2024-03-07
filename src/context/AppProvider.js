@@ -149,10 +149,7 @@ function AppProvider({ children }) {
 
   const createProduct = async ( payload) => {
     try {
-      const response = await api.post(`/products`, payload);
-      if (response.data) {
-        setSelectedProduct(response.data);
-      };
+      await api.post(`/products`, payload);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message, {
           position: "top-right",
