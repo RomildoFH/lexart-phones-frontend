@@ -70,6 +70,18 @@ module.exports = {
       ...theme('spacing'),
       '530': '530px',
     }),
+    maxHeight: theme => ({
+      ...theme('spacing'),
+      '100px': '100px',
+      '200px': '200px',
+      '300px': '300px',
+      '400px': '400px',
+      '500px': '500px',
+      '600px': '600px',
+      '700px': '700px',
+      '800px': '800px',
+      '900px': '900px',
+    }),
   },
   plugins: [],
 };

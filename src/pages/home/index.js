@@ -137,7 +137,7 @@ const Home = () => {
     };
 
     getProducts();
-    setListSize(5);
+    setListSize(50);
     return () => {
       setProductList([])
     }
@@ -164,13 +164,13 @@ const Home = () => {
       <TwoColumns
         column1={<SideBar />}
         column2={
-          <main className={`flex-col p-10 w-full lg:p-2`}>
-            <header className={`flex w-full mb-10`}>
+          <main className={`flex flex-col justify-between p-10 pb-0 w-full lg:p-2 h-full`}>
+            <header className={`flex w-full`}>
               <h1 className={`font-bold text-5xl w-full text-text-brown md:text-3xl`}>
                 Lista de produtos
               </h1>
             </header>
-            <section className={`flex justify-start w-full mb-10 gap-2`}>
+            <section className={`flex justify-start w-full gap-2`}>
               <PrimaryButton
                 title={`Adicionar produto`}
                 name={`add-product`}
@@ -188,7 +188,7 @@ const Home = () => {
                 </button>
             </section>
             <section
-              className={`flex flex-col justify-between w-full h-4/6 border-2 border-gray-50 rounded-lg pt-4 pb-2 px-2 lg:text-sm overflow-x-auto`}
+              className={`flex flex-col justify-between w-full h-4/5 border-2 border-gray-50 rounded-lg pt-4 pb-2 px-2 lg:text-sm overflow-x-auto overflow-y-hidden md:max-h-400px`}
             >
               <li className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1.5fr,0.5fr] gap-1 w-full font-medium mb-4 bg-white h-fit border-y border-gray-50 py-4 px-6 min-w-530">
                 <div className={`flex justify-between w-fit gap-2 hover:brightness-125 cursor-pointer`}>
@@ -216,13 +216,13 @@ const Home = () => {
                   <img src={DownArrow} alt={`ordenar por item`} onClick={() => orderProducts('price')} />
                 </div>
               </li>
-              <div className={`pr-1 h-4/6 mb-1 overflow-y-auto min-w-530`}>
+              <div className={`pr-1 h-5/6 mb-1 overflow-y-auto min-w-530`}>
                 <ul className={`flex-col w-full h-full bg-coral border-b border-gray-50 mb-2 text-base lg:text-sm`}>
                   {
                     filteredList?.slice((pageIndex - 1) * listSize, pageIndex * listSize)
                     .map((product, index) => (
                       <li
-                        className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1.5fr,0.5fr] gap-1 w-full bg-white h-fit border-t border-gray-50 py-4 px-6 lg:gap-1"
+                        className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1.5fr,0.5fr] gap-1 w-full bg-white h-fit border-t border-gray-50 py-4 px-6 lg:gap-1 md:px-2"
                       >
                         <p className="overflow-hidden text-left">{(pageIndex - 1) * (listSize || 0) + index + 1}</p>
                         <p className="overflow-hidden text-left">{product.name}</p>
@@ -238,7 +238,7 @@ const Home = () => {
                             )
                           }
                         </p>
-                        <div className={`flex min-w-8 max-w-10`}>
+                        <div className={`flex justify-between min-w-8 w-full`}>
                           <button
                             type="button"
                             onClick={() => navigate(`/produto/edit/${product.id}`)}
