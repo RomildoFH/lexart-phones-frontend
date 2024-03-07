@@ -87,6 +87,7 @@ const ProductsContainer = (
             .map((product, index) => (
               <li
                 className="grid grid-cols-[0.5fr,2fr,1fr,1fr,1fr,1.5fr,0.5fr] gap-1 w-full bg-white h-fit border-t border-gray-50 py-4 px-6 lg:gap-1 md:px-2"
+                key={product.id}
               >
                 <p className="overflow-hidden text-left">{(pageIndex - 1) * (listSize || 0) + index + 1}</p>
                 <p className="overflow-hidden text-left">{product.name}</p>
