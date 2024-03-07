@@ -16,6 +16,8 @@ function AppProvider({ children }) {
   const [isLogged, setIsLogged] = useState(false);
   const [listIndex, setListIndex] = useState(1);
   const [listSize, setListSize] = useState();
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const navigate = useNavigate();
 
@@ -189,6 +191,80 @@ function AppProvider({ children }) {
     };
   };
 
+  const getAllUsers = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await api.get('/users');
+
+      if (response?.data?.length) {
+        setUsers(response.data);
+        setFilteredUsers(response.data);
+      };
+
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(error?.response?.data.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
+  const editUser = async (id, payload) => {
+    try {
+      await api.patch(`/users/${id}`, payload);
+
+      toast.success('Usuário atualizado com sucesso', { autoClose: 2000 });
+
+      getAllUsers();
+    } catch (error) {
+      toast.error(error?.response?.data.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
+  const deleteUser = async (id) => {
+    try {
+      await api.delete(`/users/${id}`);
+
+      toast.success('Usuário deletado com sucesso', { autoClose: 2000 });
+
+      getAllUsers();
+    } catch (error) {
+      toast.error(error?.response?.data.message || error.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log(error)
+    };
+  };
+
   const values = useMemo(() => ({
     isLoading,
     setIsLoading,
@@ -218,6 +294,13 @@ function AppProvider({ children }) {
     updateProduct,
     createProduct,
     register,
+    getAllUsers,
+    editUser,
+    deleteUser,
+    users,
+    setUsers,
+    filteredUsers,
+    setFilteredUsers,
   }), [
     isLoading,
     email,

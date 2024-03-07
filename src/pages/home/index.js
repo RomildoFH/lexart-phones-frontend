@@ -92,8 +92,8 @@ const Home = () => {
 
   useEffect(() => {
     if (productList?.length) {
-      setLoading(false);
       setFilteredList(productList)
+      setLoading(false);
     };
 
   }, [productList]);

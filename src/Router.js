@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/login';
 import Product from './pages/product';
+import AccessManagement from './pages/accessManagement';
 // import Cadastro from './pages/Cadastro';
 
 function Routers() {
@@ -12,6 +13,7 @@ function Routers() {
       <Route path="/login" element={<Login />} />
       <Route path="/produto/edit/:id" element={<Product />} />
       <Route path="/produto/new" element={<Product />} />
+      <Route path="/gestao-acesso" element={<AccessManagement />} />
       {/* <Route path="/cadastro" element={<Cadastro />} /> */}
     </Routes>
   )
