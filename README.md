@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# Lexart Phones Frontend
+O frontend do aplicativo de gerenciamento de produtos é desenvolvido em React e hospedado no Vercel. O frontend interage com o backend Node.js por meio de APIs RESTful para fornecer uma interface de usuário intuitiva e responsiva.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Páginas
+- Login e registro
+- Produtos
+- Adição e edição de produtos
+- Gerênciamento de acesso
 
-In the project directory, you can run:
+### Como se cadastrar
+- O usuário deverá acessar atráves da rota
+```
+https://lexart-phones.vercel.app/login
+```
+- Clicar no botão <strong>Registro</strong> ou em <strong>Cadastrar-se</strong>
+- Preencha todos os campos atendendo os seguintes requisitos:
+  - Nome completo: Ter ao menos 3 dígitos;
+  - Email: Ter formato de email válido, exemplo: <i>meuemail@email.com</i>;
+  - Senha: Ter no mínimo 8 digitos, conter letras maiúsculas, minúsculas, números e caracteres especiais;
+  - Confirmar senha: Ser igual a senha informada;
+  
+    <br/><strong>Importante</strong> essa aplicação ainda não possúi sistema de recuperação ou alteração de senha, então é necessário que insira uma senha que irá se recordar. Caso tenha a perdido, deverá ser feita alteração manual através do banco de dados.
+    
+### Como fazer login
+- O usuário deverá acessar atráves da rota
+```
+https://lexart-phones.vercel.app/login
+```
+- Preencha todos os campos atendendo os seguintes requisitos:
+  - Email: Informar um email já cadastrado;
+  - Senha: Informar senha já cadastrada;
 
-### `npm start`
+ ### Tela de produtos
+ A tela de produtos, conterá uma lista de produtos já cadastrados, nela você terá acesso ao menu de filtragem, adição de produto, edição de produto ou exclusão de produto. Todos os acessos permitem realizar manipulação da lista, então tome cuidado ao deletar produtos.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ #### Paginação
+ Por default, a aplicação é carregada com o limite de 10 itens por página, sendo necessária a nevegação entre páginas através do controlador na parte inferior da tabela. Caso deseje alterar a quantidade de itens renderiados por página, acesse o menu de filtragem e altere o campo de <strong>itens por página</strong>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ #### Filtragem
+ Clique no botão de filtro, para abrir uma modal com as opções de filtro. Você poderá filtrar os itens por Fabricante, Modelo, Preço Mínimo, Preço Máximo e Cor. Todos os filtros são acumulativos, ou seja, você poderá utilizar mais de um filtro simultaneamente. Após selecionar todos os filtros desejados clique no botão Aplicar filttros. Caso deseje remover os filtros, poderá remover individualmente ou então clicar no botão Limpar filtros no menu de filtragem. Para fechar o menu você deverá clicar em algum lugar da tela fora dele.
 
-### `npm test`
+ #### Busca por nome
+ Na parte superior da lista de produtos, existe um input, onde você poderá inserir um termo para busca (ele não é case sensitive).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Ordenação
+No topo da lista de produtos, existem os headers de cada coluna, onde ao lado de seu nome existe uma "seta" para baixo, ao clicar em uma das setas, você fará ordenação <strong>Crescente</strong> de acordo com a propriedade selecionada. A ordenação ocorre em toda a lista filtrada, ou seja, pode ocorrer de que elementos da última página, agora apareçam na primeira devido a ordenação que o usuário selecionou. Para limpar a ordenação clique na seta ao lado do header "Item".
 
-### `npm run build`
+#### Exclusão
+Em cada linha, estão presentes 2 botões, sendo o botão de edição e o botão de exclusão. Ao clicar no botão de exclusão, o item será imédiatamente deletado, não haverá solicitação de confirmação, então cuidado ao utilizar este recurso.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Edição
+Ao clicar no botão de edição, presente em cada linha, você será redirecionado para uma nova página, onde conterá um formulário com todas as informaçõess atuais do produto. Para editar, você deve substituir os campos que deseja atualizar com a nova informação e em seguida clicar no botão Salvar produto.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Adicionando produto
+Clique no botão Adicionar produto no início da página, você será redirecionado para uma nova página, onde conterá um formulário que deverá ser preenchido com as informações sobre o produto.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Menu de navegação
+O meno de navegação aparecerá por padrão na lateral esquerda da página, porém, se você estiver acessando através de um dispositivo mobile, esse menu ficará oculto na parte superior, para abri-lo clique no botão Menu.
 
-### `npm run eject`
+#### Produtos
+Ao clicar no botão "produtos" você será redirecionado para a página principal.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Sair
+Ao clicar no botão "sair" você será redirecionado para a página de login.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Acessos
+O botão de "acessos" somente será exibido para usuários com a permissão de administrador
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Página de gestão de acesso
+Essa página é permitida apenas para usuários com a permissão de administrador. Nela conterá uma lista de usuários cadastrados onde será possível acessar o menu de edição e também excluir um usuário.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Edição de usuário
+Aqui você poderá editar o Nome, Email e a Permissão de acesso do usuário, após preenchimento, clique no botão Salvar e clique fora do menu para realizar o fechamento.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Exclusão de usuário
+Clique no botão excluir presente na linha do usuário. Essa operação não solicitará confirmação, então cuidado para não deletar um usuário não desejado.
