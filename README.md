@@ -75,3 +75,39 @@ Aqui você poderá editar o Nome, Email e a Permissão de acesso do usuário, ap
 
 #### Exclusão de usuário
 Clique no botão excluir presente na linha do usuário. Essa operação não solicitará confirmação, então cuidado para não deletar um usuário não desejado.
+
+
+## Utilizando o projeto localmente
+
+### Requisitos:
+- Git
+- GitHub
+- Node v16.0.0 ou Node v20.0.0 (recomendado)
+- NVM v0.38.0
+
+1. Clone do repositório utilizando a chave SSH:
+  ``` bash
+  git clone git@github.com:RomildoFH/lexart-phones-frontend.git
+  ```
+2. Installe as dependências
+  ```bash
+  npm install
+  ```
+3. Altere a baseURL do arquivo <strong>"src/services/api.js"</strong> para a URL onde está funcionando a API que deseja utilizar. Caso queria utilizar a API que encontra-se em produção, utilize:
+``` JavaScript
+const api = axios.create({
+  baseURL: "https://lexart-phones-api.vercel.app",
+});
+```
+Caso tenha iniciado sua API utilize o localhost no qual ela está em andamento na sua máquina, por exemplo:
+``` JavaScript
+const api = axios.create({
+  baseURL: "http://localhost:3001",
+});
+```
+
+4. Start a aplicação react:
+ ```bash
+ npm start
+ ```
+5. Acesse a aplicação através do seu navegador utilizando o endereço do serviço iniciado pelo react.
