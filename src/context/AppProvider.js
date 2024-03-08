@@ -18,6 +18,7 @@ function AppProvider({ children }) {
   const [listSize, setListSize] = useState();
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [role, setRole] = useState('');
 
   const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ function AppProvider({ children }) {
       const response = await api.post('/users/login', payload);
       if (response?.data) {
         localStorage.setItem('@TOKEN', response.data.token);
+        localStorage.setItem('@ROLE', response.data.role);
         navigate("/");
         setIsLoading(false);
       };

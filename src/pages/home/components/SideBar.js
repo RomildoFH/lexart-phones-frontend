@@ -19,6 +19,8 @@ const SideBar = () => {
 
   const navigate = useNavigate();
 
+  const role = localStorage.getItem('@ROLE');
+
   return (
     <nav className="flex-col w-full h-full border-solid border border-gray-50 rounded-r-3xl shadow-md shadow-emerald-50 bg-coral pt-20 px-4 md:flex-row md:rounded-none md:p-2">
       <img
@@ -44,14 +46,14 @@ const SideBar = () => {
           menu ? (
             <div className={`flex flex-row justify-around w-full`}>
               <NavOption title={'Produtos'} icon={HomeIcon} onClick={() => navigate('/')} />
-              <NavOption title={'Acessos'} icon={SecurityIcon} onClick={() => navigate('/gestao-acesso')} />
+              { role === 'admin' && <NavOption title={'Acessos'} icon={SecurityIcon} onClick={() => navigate('/gestao-acesso')} /> }
               <NavOption title={'Sair'} icon={LogoutIcon} onClick={logout} />
             </div>
           ) : null
         }
         <div className={`flex flex-col md:hidden`}>
           <NavOption title={'Produtos'} icon={HomeIcon} onClick={() => navigate('/')} />
-          <NavOption title={'Acessos'} icon={SecurityIcon} onClick={() => navigate('/gestao-acesso')} />
+          { role === 'admin' && <NavOption title={'Acessos'} icon={SecurityIcon} onClick={() => navigate('/gestao-acesso')} /> }
           <NavOption title={'Sair'} icon={LogoutIcon} onClick={logout} />
         </div>
       </div>
