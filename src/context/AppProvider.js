@@ -56,6 +56,7 @@ function AppProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('@TOKEN');
+    localStorage.removeItem('@ROLE');
     navigate("/login");
   };
 
