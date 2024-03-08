@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import AppContext from "../../../context/AppContext";
 import PrimaryButton from "./PrimaryButton";
+import Logo from '../../../images/svg/lex-white.svg';
 
 const RegistryForm = ({ setTypeForm }) => {
   const {
@@ -49,7 +50,8 @@ const RegistryForm = ({ setTypeForm }) => {
   };
 
   return (
-    <form className="flex flex-col w-5/6 py-10 px-10 rounded-2xl m-auto border border-gray-70 shadow-lg gap-4 md:w-full">
+    <form className="flex flex-col w-5/6 py-10 md:py-4 px-10 rounded-2xl m-auto border border-gray-70 shadow-lg gap-4 md:w-full md:gap-2">
+      <img src={Logo} alt={`lexartlabs-logo`} className={`hidden drop-shadow-brown mb-10 w-full md:mb-4 md:w-48 md:block mx-auto`} />
       <div className="mb-4">
         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
           Nome Completo

@@ -15,7 +15,7 @@ const Login = () => {
       </section>}
       column2={
         <main className={`w-full`}>
-          <section className={`w-full px-9`}>
+          <section className={`w-full px-9 md:px-2`}>
             <nav className={`flex flex-row justify-center w-full px-10 mb-4`}>
               <button type="button" onClick={() => setTypeForm('login')} className={`w-2/5 p-2 hover:bg-coral rounded-lg hover:shadow-md`}>
                 Login
