@@ -3,7 +3,7 @@ import EditIcon from '../../../images/svg/edit-svgrepo-com.svg';
 import DeleteIcon from '../../../images/svg/delete-recycle-bin-trash-can-svgrepo-com.svg';
 import { useNavigate } from 'react-router-dom';
 
-const UsersContainer = ({ users, deleteUser, filteredList }) => {
+const UsersContainer = ({ users, deleteUser, filteredList, setSelectedUser, setEditUserMenu }) => {
   const navigate = useNavigate();
 
   return (
@@ -22,7 +22,10 @@ const UsersContainer = ({ users, deleteUser, filteredList }) => {
               <div className="overflow-hidden text-left">{user.email}</div>
               <div className="overflow-hidden text-left">{user.role}</div>
               <div className="flex justify-between min-w-8 w-full">
-                <button type="button" onClick={() => navigate(`/user/edit/${user.id}`)}>
+                <button type="button" onClick={() => {
+                  setSelectedUser(user);
+                  setEditUserMenu(true);
+                }}>
                   <img src={EditIcon} alt="editar" className="hover:brightness-200 transition duration-300 cursor-pointer" />
                 </button>
                 <button type="button" onClick={() => deleteUser(user.id)}>

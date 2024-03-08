@@ -6,6 +6,8 @@ import UsersContainer from './components/UsersContainer';
 import AppContext from '../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
+import ModalContainer from './components/ModalContainer';
+import EditUserForm from './components/EditUserMenu';
 
 const AccessManagement = () => {
   const {
@@ -14,13 +16,14 @@ const AccessManagement = () => {
     getAllUsers,
     editUser,
     deleteUser,
-    filteredUsers,
     setFilteredUsers,
   } = useContext(AppContext);
 
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [itens, setItens] = useState([]);
+  const [editUserMenu, setEditUserMenu] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({});
 
   const navigate = useNavigate();
 
@@ -77,7 +80,14 @@ const AccessManagement = () => {
               placeholder={'Buscar por nome ou email'}
               onChange={setSearchTerm}
             />
-            <UsersContainer users={users} deleteUser={deleteUser} filteredList={itens} />
+            <UsersContainer users={users} deleteUser={deleteUser} filteredList={itens} setSelectedUser={setSelectedUser} setEditUserMenu={setEditUserMenu} />
+
+            <ModalContainer
+              isActive={editUserMenu}
+              closeModal={() => setEditUserMenu(false)}
+            >
+              <EditUserForm selectedUser={selectedUser} onClick={editUser} setSelectedUser={setSelectedUser} />              
+            </ModalContainer>
           </main>
         )}
       />
