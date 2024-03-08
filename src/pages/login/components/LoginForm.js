@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import AppContext from "../../../context/AppContext";
 import PrimaryButton from "./PrimaryButton";
 
@@ -27,7 +26,6 @@ const LoginForm = ({setTypeForm}) => {
       default:
         break;
     }
-
   };
 
   return (
