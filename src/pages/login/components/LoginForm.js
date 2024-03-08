@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import AppContext from "../../../context/AppContext";
 import PrimaryButton from "./PrimaryButton";
+import Logo from '../../../images/svg/lex-white.svg';
 
 const LoginForm = ({setTypeForm}) => {
 
@@ -27,11 +27,11 @@ const LoginForm = ({setTypeForm}) => {
       default:
         break;
     }
-
   };
 
   return (
     <form className="flex flex-col w-5/6 py-12 px-10 rounded-2xl m-auto border border-gray-70 shadow-lg gap-4 md:w-full">
+      <img src={Logo} alt={`lexartlabs-logo`} className={`hidden drop-shadow-brown mb-10 w-full md:mb-4 md:w-48 md:block mx-auto`} />
       <div className="mb-4">
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
         <input
