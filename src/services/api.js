@@ -2,7 +2,7 @@ import axios from "axios";
 
 //debugge
 const api = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "https://lexart-phones-api.vercel.app",
 });
 
 api.interceptors.request.use(
