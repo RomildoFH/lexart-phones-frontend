@@ -111,3 +111,20 @@ const api = axios.create({
  npm start
  ```
 5. Acesse a aplicação através do seu navegador utilizando o endereço do serviço iniciado pelo react.
+
+## Autoria
+
+<table>
+  <tbody>
+    <tr>
+      <td>Desenvolvimento:</td>
+      <td>Romildo Silva</td>
+    </tr>
+    <tr>
+      <td>Design:</td>
+      <td>Romildo Silva</td>
+    </tr>
+  </tbody>
+</table>
+
+Este projeto foi desenvolvimento durante teste técnico para o processo de seleção de Desenvolvedor Full-Stack JavaScript da empresa Lexartlabs, não é permitido o compartilhamento de modo integral ou parcial sem prévia autorização do autor.
