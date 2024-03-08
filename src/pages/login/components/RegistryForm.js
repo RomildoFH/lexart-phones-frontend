@@ -49,7 +49,7 @@ const RegistryForm = ({ setTypeForm }) => {
   };
 
   return (
-    <form className="flex flex-col w-5/6 py-16 px-10 rounded-2xl m-auto border border-gray-70 shadow-lg gap-4">
+    <form className="flex flex-col w-5/6 py-10 px-10 rounded-2xl m-auto border border-gray-70 shadow-lg gap-4 md:w-full">
       <div className="mb-4">
         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
           Nome Completo
